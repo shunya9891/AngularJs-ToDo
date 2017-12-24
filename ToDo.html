@@ -1,0 +1,85 @@
+<html ng-app="ToDo">
+<title>Angular.jsで簡単Todoアプリ</title>
+<head>
+	<meta lang="ja" charset="UTF-8">
+	<!--Angular.js-->
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.min.js"></script>
+	<!--Bootstrap-->
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
+	<!--jquery-->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<!--javascript-->	
+	<script type="text/javascript" src="script.js"></script>
+</head>
+<style>
+html,body{
+	background-color:#f5f5f5
+}
+.cmplete {
+	text-decoration: line-through;
+	color: grey;
+}
+</style>
+<body>
+	<h1 style="text-align:center;">ToDo</h1>
+	<h4 style="text-align:center;color:#666">今日から本気出すアプリ</h4>
+	<!--フォームをsubmitした時にcreate()を実行する-->
+	<form>
+		<div ng-controller="TodoController as vm">
+			<!--入力エリア-->
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-2"></div>
+					<div class="col-md-5" style="padding-right:2%;padding-top:10px">
+						<!--ToDo入力ボッックス-->
+						<div class="input-group" >
+							<input type="text" id="todotext" class="form-control" ng-model="vm.newTodo" placeholder="今日やること">
+							<span class="input-group-btn">
+								<button ng-click="vm.create()" class="btn btn-primary">リストへ追加</button>
+							</span>
+						</div>
+					</div>
+					<div class="col-md-3"  style="padding-right:2%;padding-top:10px">
+						<!--削除ボタン-->
+						<button class="btn btn-danger" ng-click="vm.archive()">チェックしたToDoを消去</button>
+					</div>
+					<div class="col-md-2"></div>
+				</div>
+			</div>
+
+			<!--TODOLISTエリア-->
+			<div class="container-fluid">
+				<div class="row">	
+					<div class="col-md-2"></div>
+					<div class="col-md-8" style="padding-right:2%;padding-top:20px">
+						<!--ToDoリスト-->
+						<table  class="table table-striped" style="font-size:20px;border-bottom:solid 1px #ddd">
+							<thead>
+								<tr>
+									<th></th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="todo in vm.todos">
+									<td width="40px">
+										<input type="checkbox" style="width:40px;height:40px" ng-model="todo.checked">
+									</td>
+									<td style="vertical-align:middle">
+										<!--<ul ng-repeat="todo in vm.todos track by $index">-->
+										<!--todo.chekdedをng-modelに指定することで、チェック時に配列内のdoneの値を書き換える-->
+										<!--todo.chekdedがtrueの場合にcmpleteクラスが適用される-->
+										<span ng-class="{'cmplete': todo.checked }">{{todo.title}}</span>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<!--<div><br><hr>・for debug <br>{{vm.todos|json}}</div>-->
+					</div>
+					<div class="col-md-2"></div>
+				</div>
+			</div>
+		</div>
+	</form>
+</body>
+</html>
